@@ -1,0 +1,82 @@
+.main-header {
+    height: 5.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    box-shadow: inset 0 -1px 0 0 #E1E1E1;
+    padding-inline: var(--padding-side);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    .left {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        gap: 1.5rem;
+        .menu-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            .menu-icon {
+                color: black;
+                width: 1.25rem;
+                height: auto;
+            }
+            span {
+                font-size: .875rem;
+            }
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            .search-icon {
+                color: black;
+                width: 1.25rem;
+                height: auto;
+            }
+            span {
+                font-size: .875rem;
+            }
+        }
+    }
+    .logo {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        a {
+            font-size: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    }
+    .right {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        gap: 1.5rem;
+        justify-content: flex-end;
+        .contact {
+            p {
+                font-size: .875rem;
+                cursor: pointer;
+            }
+        }
+        .items {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            svg {
+                color: black;
+                width: 1.25rem;
+                height: auto;
+                cursor: pointer;
+            }
+        }
+    }
+}

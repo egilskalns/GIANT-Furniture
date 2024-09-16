@@ -1,0 +1,17 @@
+.main-footer {
+    display: flex;
+    flex-direction: column;
+    padding-block: 1.5rem;
+    border-top: solid 1px #E1E1E1;
+    margin-top: var(--header-height);
+    .footer-items {
+        display: flex;
+        justify-content: space-between;
+        .left {
+            .localization-icon {
+                width: .75rem;
+                height: auto;
+            }
+        }
+    }
+}

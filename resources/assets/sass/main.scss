@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+    -webkit-user-drag: none;
+}
+
+:root {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --header-height: 5.5rem;
+
+    --padding-side: 3rem;
+    --padding-side-lg: 9.875rem;
+}
+
+body {
+    scroll-behavior: smooth;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100lvh;
+    position: relative;
+}
+
+.-hero {
+    padding-top: var(--header-height);
+}
+
+.-card {
+    min-height: 115lvh;
+}
+
+.padding-side-lg {
+    padding-inline: var(--padding-side-lg);
+}
+
+@import "header";
+@import "home/banner";
+@import "home/maincategories";
+@import "footer";
