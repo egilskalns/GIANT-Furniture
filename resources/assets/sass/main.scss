@@ -7,25 +7,28 @@
     text-decoration: none;
     color: black;
     -webkit-user-drag: none;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
 }
 
 :root {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 400;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
     --header-height: 5.5rem;
-
-    --padding-side: 3rem;
+    --padding-side: 3.33333vw;
     --padding-side-lg: 9.875rem;
 }
 
 body {
     scroll-behavior: smooth;
+}
+
+.app {
+    position: relative;
+    overflow-x: hidden;
 }
 
 .container {
@@ -51,3 +54,4 @@ body {
 @import "home/banner";
 @import "home/maincategories";
 @import "footer";
+@import "mobile-menu";

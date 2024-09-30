@@ -1,9 +1,14 @@
 <header class="main-header">
     <div class="left">
-        <div class="menu-box">
-            <x-carbon-menu class="menu-icon" />
-            <span>Menu</span>
-        </div>
+        <button aria-expanded="false" class="mobile-menu-toggle">
+            <span class="mobile-menu-icon">
+                <span></span>
+            </span>
+            <span class="mobile-menu-options">
+                <span>Menu</span>
+                <span>Close.</span>
+            </span>
+        </button>
         <div class="search-box">
             <x-carbon-search class="search-icon" />
             <span>Search</span>
@@ -19,5 +24,22 @@
             <x-carbon-favorite class="favorite-icon" />
             <x-carbon-user class="user-icon" />
         </div>
+    </div>
+    <div id="mobile-menu" aria-expanded="false" class="mobile-menu">
+        <aside class="side-container">
+            <div class="options">
+                <div class="opt-box">
+                    <a href="" class="option">New</a>
+                    <x-carbon-close class="opt-icon" />
+                </div>
+                <a href="">Sofas</a>
+                <a href="">Beds & Headboards</a>
+                <a href="">Nightstands</a>
+                <a href="">Beds</a>
+                <a href="">Beds</a>
+                <a href="">Beds</a>
+                <a href="">Beds</a>
+            </div>
+        </aside>
     </div>
 </header>

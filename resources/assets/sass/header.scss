@@ -14,19 +14,95 @@
         display: flex;
         flex: 1;
         align-items: center;
-        gap: 1.5rem;
-        .menu-box {
+        .mobile-menu-toggle {
+            position: absolute;
+            z-index: 2000;
             display: flex;
-            align-items: center;
             gap: 1rem;
             cursor: pointer;
-            .menu-icon {
-                color: black;
-                width: 1.25rem;
-                height: auto;
+            background: none;
+            overflow: hidden;
+            max-height: 1rem;
+            border: none;
+            outline: none;
+            .mobile-menu-options {
+                display: flex;
+                flex-direction: column;
+                align-self: flex-start;
             }
+            .mobile-menu-icon {
+                display: inline-block;
+                height: 1rem;
+                position: relative;
+                width: 1rem;
+                &::before {
+                    content: "";
+                    display: block;
+                    height: .0625rem;
+                    top: 1px;
+                    position: absolute;
+                    width: 100%;
+                    background: #000000;
+                }
+                &::after {
+                    content: "";
+                    bottom: 2px;
+                    display: block;
+                    height: .0625rem;
+                    position: absolute;
+                    width: 100%;
+                    background: #000000;
+                }
+                span {
+                    &::before {
+                        content: "";
+                        display: block;
+                        height: .0625rem;
+                        position: absolute;
+                        top: calc(50% - 1px);
+                        width: 100%;
+                        background: #000000;
+                        transform: rotate(0deg);
+                    }
+                    &::after {
+                        content: "";
+                        display: block;
+                        height: .0625rem;
+                        position: absolute;
+                        top: calc(50% - 1px);
+                        width: 100%;
+                        background: #000000;
+                        transform: rotate(0deg);
+                    }
+                }
+            }
+
+            &[aria-expanded="true"] {
+                .mobile-menu-options {
+                    align-self: flex-end;
+                }
+                .mobile-menu-icon {
+                    &::before {
+                        visibility: hidden;
+                    }
+                    &::after {
+                        visibility: hidden;
+
+                    }
+                    span {
+                        &::before {
+                            transform: rotate(45deg);
+                        }
+                        &::after {
+                            transform: rotate(-45deg);
+                        }
+                    }
+                }
+            }
+
             span {
                 font-size: .875rem;
+                line-height: 1rem;
             }
         }
         .search-box {
@@ -34,6 +110,7 @@
             align-items: center;
             gap: 1rem;
             cursor: pointer;
+            padding-left: 6rem;
             .search-icon {
                 color: black;
                 width: 1.25rem;
