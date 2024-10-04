@@ -14,7 +14,7 @@
         display: flex;
         flex: 1;
         align-items: center;
-        .mobile-menu-toggle {
+        .mobile-menu-toggle-left {
             position: absolute;
             z-index: 2000;
             display: flex;
@@ -63,6 +63,7 @@
                         width: 100%;
                         background: #000000;
                         transform: rotate(0deg);
+                        transition: transform .2s;
                     }
                     &::after {
                         content: "";
@@ -73,6 +74,7 @@
                         width: 100%;
                         background: #000000;
                         transform: rotate(0deg);
+                        transition: transform .2s;
                     }
                 }
             }

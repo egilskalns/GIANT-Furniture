@@ -1,6 +1,6 @@
 <header class="main-header">
     <div class="left">
-        <button aria-expanded="false" class="mobile-menu-toggle">
+        <button aria-expanded="false" class="mobile-menu-toggle-left">
             <span class="mobile-menu-icon">
                 <span></span>
             </span>
@@ -20,25 +20,76 @@
             <p>Call Us</p>
         </div>
         <div class="items">
-            <x-carbon-shopping-cart class="cart-icon" />
-            <x-carbon-favorite class="favorite-icon" />
-            <x-carbon-user class="user-icon" />
+            <x-carbon-shopping-cart title="Cart" class="cart-icon" />
+            <x-carbon-favorite title="Wishlist" class="favorite-icon" />
+            <x-carbon-user title="Account" class="user-icon mobile-menu-toggle-right" />
         </div>
     </div>
-    <div id="mobile-menu" aria-expanded="false" class="mobile-menu">
+    <div id="mobile-menu-left" aria-expanded="false" class="mobile-menu-left">
         <aside class="side-container">
             <div class="options">
                 <div class="opt-box">
                     <a href="" class="option">New</a>
                     <x-carbon-close class="opt-icon" />
                 </div>
-                <a href="">Sofas</a>
-                <a href="">Beds & Headboards</a>
-                <a href="">Nightstands</a>
-                <a href="">Beds</a>
-                <a href="">Beds</a>
-                <a href="">Beds</a>
-                <a href="">Beds</a>
+            </div>
+        </aside>
+    </div>
+    <div id="mobile-menu-right" aria-expanded="false" class="mobile-menu-right">
+        <aside class="side-container">
+            <div class="header">
+                <h4>Identification</h4>
+                <span class="mobile-menu-toggle-right"><x-carbon-close class="close-icon"/></span>
+            </div>
+            <div class="l-form-container">
+                <h4>I already have an account</h4>
+                <span>Mandatory fields*</span>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="email-container">
+                        <label for="email">{{ __('Login*') }}</label>
+                        <div>
+                            <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="pass-container">
+                        <label for="password">{{ __('Password*') }}</label>
+                        <div>
+                            <div>
+                                <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <x-carbon-view-off title="Show password" class="view-icon view-pass-toggle" />
+                                <x-carbon-view title="Hide password" class="view-icon hidden view-pass-toggle" />
+                            </div>
+                            @if (Route::has('password.request'))
+                            <a class="pass-reset" href="{{ route('password.request') }}">
+                                {{ __('Forgot Your Password?') }}
+                            </a>
+                            @endif
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <button class="proceed-btn -primary" type="submit">
+                                {{ __('Sign in') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="r-form-container">
+                <h4>I don't have an account</h4>
+                <p>Enjoy added benefits and a richer experience by creating a personal account</p>
+                <a href="{{"register"}}" class="proceed-btn -secondary">Create My GIANT account</a>
             </div>
         </aside>
     </div>

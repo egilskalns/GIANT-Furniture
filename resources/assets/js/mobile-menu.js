@@ -1,17 +1,58 @@
-const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
+// Left and right side menus
+const mobileMenuToggleL = document.querySelector('.mobile-menu-toggle-left');
+const mobileMenuToggleR = document.querySelectorAll('.mobile-menu-toggle-right');
+const mobileMenuL = document.getElementById('mobile-menu-left');
+const mobileMenuR = document.getElementById('mobile-menu-right');
 const body = document.querySelector('body');
 
-function menuToggle() {
-    if (mobileMenu.getAttribute('aria-expanded') === 'true') {
-        mobileMenu.setAttribute('aria-expanded', 'false');
-        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+function menuToggleLeft() {
+    if (mobileMenuL.getAttribute('aria-expanded') === 'true') {
+        mobileMenuL.setAttribute('aria-expanded', 'false');
+        mobileMenuToggleL.setAttribute('aria-expanded', 'false');
         body.style.overflow = 'auto';
     } else {
-        mobileMenu.setAttribute('aria-expanded', 'true');
-        mobileMenuToggle.setAttribute('aria-expanded', 'true');
+        mobileMenuL.setAttribute('aria-expanded', 'true');
+        mobileMenuToggleL.setAttribute('aria-expanded', 'true');
         body.style.overflow = 'clip';
     }
 }
 
-mobileMenuToggle.addEventListener('click', menuToggle);
+function menuToggleRight() {
+    if (mobileMenuR.getAttribute('aria-expanded') === 'true') {
+        mobileMenuR.setAttribute('aria-expanded', 'false');
+        body.style.overflow = 'auto';
+    } else {
+        mobileMenuR.setAttribute('aria-expanded', 'true');
+        body.style.overflow = 'clip';
+    }
+}
+
+mobileMenuToggleL.addEventListener('click', menuToggleLeft);
+mobileMenuToggleR.forEach((toggle) => {
+    toggle.addEventListener('click', menuToggleRight);
+});
+
+// Show/hide password
+const showPasswordBtns = document.querySelectorAll('.view-pass-toggle');
+const passwordInput = document.getElementById('password');
+let temp;
+
+function togglePasswordVisibility() {
+    showPasswordBtns.forEach((btn) => {
+       if (btn.classList.contains('hidden')) {
+           btn.classList.remove('hidden');
+       } else {
+           btn.classList.add('hidden');
+       }
+    });
+
+    if (passwordInput.getAttribute('type') === 'password') {
+        passwordInput.setAttribute('type', 'text');
+    } else {
+        passwordInput.setAttribute('type', 'password');
+    }
+}
+
+showPasswordBtns.forEach((btn) => {
+    btn.addEventListener('click', togglePasswordVisibility);
+})
