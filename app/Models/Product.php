@@ -2,25 +2,30 @@
 
 namespace App\Models;
 
+use App\Traits\GenerateUniqueSlugTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory, Searchable, GenerateUniqueSlugTrait;
 
     protected $fillable = [
+        'category_id',
         'name',
         'slug',
         'sku',
-        'details',
         'description',
-        'main_image',
-        'alt_images',
+        'specification',
+        'main_img',
+        'alt_img',
         'price',
-        'quantity',
+        'stock',
+        'discount',
+        'rating',
     ];
 
     /**
@@ -29,7 +34,7 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
-        'alt_images' => 'array',
+        'alt_img' => 'array',
     ];
 
     /**
@@ -49,12 +54,12 @@ class Product extends Model
     }
 
     /**
-     * The categories that belong to the Product
+     * The category that belong to the Product
      *
-     * @return BelongsToMany
+     * @return BelongsTo
      */
-    public function categories(): BelongsToMany {
-        return $this->belongsToMany(Category::class);
+    public function category(): BelongsTo {
+        return $this->belongsTo(Category::class, 'id', 'category_id');
     }
 
     /**

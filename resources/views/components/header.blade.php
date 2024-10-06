@@ -28,10 +28,16 @@
     <div id="mobile-menu-left" aria-expanded="false" class="mobile-menu-left">
         <aside class="side-container">
             <div class="options">
-                <div class="opt-box">
-                    <a href="" class="option">New</a>
-                    <x-carbon-close class="opt-icon" />
-                </div>
+                @foreach($mainCategories as $category)
+                    <a href="{{route('shop.index', ['category' => $category->slug])}}" class="opt-box">
+                        <span class="option">{{$category->name}}</span>
+                        <span class="arrow-right"></span>
+                    </a>
+                @endforeach
+            </div>
+            <div class="secondary-options">
+                <a href="">Find a Warehouse</a>
+                <a href="">Can we help you?</a>
             </div>
         </aside>
     </div>
