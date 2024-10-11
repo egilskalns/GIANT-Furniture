@@ -12,7 +12,11 @@ class ShopController extends Controller
 
         $category = $allCategories->where('slug', $category)->first();
         $mainCategories = $allCategories->whereNull('parent_id')->all();
-        $products = $category->products;
+        $products = $category->products();
+        $productsCount = $products->get()->count();
+        $minPrice = $products->get()->min('price');
+        $maxPrice = $products->get()->max('price');
+        $paginatedProducts = $products->paginate(24);
 
         if ($category->parent_id == null) {
             $subCategories = $category->children;
@@ -20,7 +24,7 @@ class ShopController extends Controller
             $subCategories = null;
         }
 
-        return view('shop.index', compact('products', 'category', 'subCategories', 'mainCategories'));
+        return view('shop.index', compact('paginatedProducts', 'productsCount', 'minPrice', 'maxPrice', 'category', 'subCategories', 'mainCategories'));
     }
 
     public function show($category, $product) {

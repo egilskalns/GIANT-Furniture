@@ -31,7 +31,7 @@
                 @foreach($mainCategories as $category)
                     <a href="{{route('shop.index', ['category' => $category->slug])}}" class="opt-box">
                         <span class="option">{{$category->name}}</span>
-                        <span class="arrow-right"></span>
+                        <span class="arrow arrow-right"></span>
                     </a>
                 @endforeach
             </div>

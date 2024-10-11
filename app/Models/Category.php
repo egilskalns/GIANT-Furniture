@@ -23,7 +23,13 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function products(): HasMany {
-        return $this->hasMany(Product::class, 'category_id', 'id');
+    public function products()
+    {
+        if ($this->children->count() > 0) {
+            $categoryIds = $this->children->pluck('id')->toArray();
+            return Product::whereIn('category_id', $categoryIds);
+        } else {
+            return Product::where('category_id', $this->id);
+        }
     }
 }

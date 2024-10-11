@@ -1,0 +1,300 @@
+.left {
+    div {
+        a {
+            font-size: .875rem;
+            line-height: 1rem;
+            padding-bottom: 1rem;
+        }
+    }
+}
+.right {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    button {
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        gap: .5rem;
+        span {
+            font-size: .875rem;
+            line-height: 1rem;
+        }
+        .icon {
+            width: 1rem;
+        }
+        &[aria-expanded="true"] {
+            .arrow-down {
+                rotate: 90deg;
+                &::before, &::after {
+                    opacity: 1;
+                    top: 50%;
+                }
+            }
+        }
+    }
+    .drop-list {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: .5rem;
+        top: 100%;
+        right: 0;
+        z-index: 50;
+        background: #fff;
+        padding: 1rem;
+        border-radius: 0 0 0 10px;
+        &[aria-expanded="false"] {
+            display: none;
+        }
+    }
+}
+.filters-side {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    width: max(15vw, 285px);
+    top: 11rem;
+    left: var(--padding-side);
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 3rem;
+    &[aria-expanded="false"] {
+        display: none;
+    }
+    .org {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        padding-block: 1rem;
+        margin-right: 1rem;
+    }
+    .accordion {
+        display: flex;
+        flex-direction: column;
+        margin-right: 1rem;
+        .item {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #e1e1e1;
+            &:first-child {
+                border-top: none;
+            }
+            .accordion-header {
+                display: flex;
+                justify-content: space-between;
+                background: transparent;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                font-size: 1rem;
+                line-height: 1.25rem;
+                letter-spacing: .025rem;
+                padding-block: 1rem;
+                span {
+                    pointer-events: none;
+                }
+                &[aria-expanded="true"] {
+                    .arrow-down {
+                        rotate: 90deg;
+                        &::before, &::after {
+                            opacity: 1;
+                            top: 50%;
+                        }
+                    }
+                }
+            }
+            .accordion-content {
+                display: none;
+                padding-bottom: 1rem;
+                gap: .5rem;
+                &[aria-expanded="true"] {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .option {
+                    display: flex;
+                    align-items: center;
+                    gap: .5rem;
+                    input {
+                        width: 1rem;
+                    }
+                }
+                .grid {
+                    display: grid;
+                    grid-auto-flow: row;
+                    grid-template-columns: repeat(6, 1fr);
+                    gap: .5rem;
+                    button {
+                        display: flex;
+                        background: transparent;
+                        border: none;
+                        outline: none;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        span {
+                            width: 2rem;
+                            height: 2rem;
+                            border-radius: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.product-list {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-top: .5rem;
+    padding-left: calc(max(15vw, 285px) + var(--padding-side));
+    transition: padding-left .2s cubic-bezier(.39,.575,.565,1);
+    &[aria-expanded="true"] {
+        padding-left: 0;
+    }
+    .product-item {
+        display: flex;
+        flex-direction: column;
+        grid-column: span 1;
+        height: 40lvh;
+        .cover-img {
+            background: #E1E1E1;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            display: block;
+            border-radius: 10px;
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: 0;
+            }
+        }
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            padding-block: .5rem;
+            letter-spacing: -.025rem;
+            font-size: 1rem;
+            div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .title {
+                    font-weight: 500;
+                }
+                .color {
+                    width: 1rem;
+                    height: 1rem;
+                    border-radius: 100%;
+                    border: 1px solid #e1e1e1;
+                }
+            }
+            .dimensions {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1rem;
+                span {
+                    display: flex;
+                    gap: .25rem;
+                    span {
+                        font-size: .875rem;
+                        line-height: 1rem;
+                        letter-spacing: -.025rem;
+                    }
+                    .arrow {
+                        width: 1rem;
+                    }
+                }
+            }
+            .price {
+                display: flex;
+                letter-spacing: -.025rem;
+                font-size: 1rem;
+                line-height: 1.25rem;
+                .eur-icon {
+                    width: .9rem;
+                }
+            }
+        }
+    }
+}
+
+.slider-option {
+    display: flex;
+    flex-direction: column;
+    .slider-numeric {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: .5rem;
+        padding-bottom: 1rem;
+        div {
+            display: flex;
+            position: relative;
+            .icon {
+                position: absolute;
+                width: 1rem;
+                left: .5rem;
+                top: calc(50% - .5rem);
+            }
+            input {
+                display: flex;
+                width: 100%;
+                padding: .5rem .5rem .5rem 2rem;
+                border-radius: 10px;
+                border: 1px solid #e1e1e1;
+                outline: none;
+                font-size: 1rem;
+            }
+        }
+    }
+    .slider {
+        display: flex;
+        position: relative;
+        align-items: center;
+        padding-bottom: 1.5rem;
+        .from,
+        .to {
+            position: absolute;
+            left: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 100%;
+            background-color: black;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .to {
+            left: unset;
+            right: 0;
+        }
+        .rail {
+            width: 100%;
+            height: .5rem;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .range {
+            position: absolute;
+            left: .5rem;
+            right: .5rem;
+            height: .25rem;
+            background-color: black;
+        }
+    }
+}

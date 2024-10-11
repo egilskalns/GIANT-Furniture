@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('sku');
             $table->string('description');
             $table->text('specification');
+            $table->string('color');
             $table->string('main_img');
             $table->text('alt_img')->nullable();
             $table->unsignedBigInteger('price');
