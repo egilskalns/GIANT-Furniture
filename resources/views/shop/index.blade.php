@@ -55,7 +55,7 @@
                         </button>
                         <div aria-expanded="false" class="accordion-content">
                             <div class="option">
-                                <input type="checkbox" name="sale" id="sale-filter">
+                                <x-checkbox name="sale-filter"/>
                                 <span>Sale</span>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         </button>
                         <div aria-expanded="false" class="accordion-content">
                             <div class="option">
-                                <input type="checkbox" name="in_warehouse" id="in-warehouse-filter">
+                                <x-checkbox name="in-warehouse-filter"/>
                                 <span>In Warehouse</span>
                             </div>
                         </div>
@@ -88,95 +88,31 @@
                         </div>
                     </div>
                     <div class="item">
-                        <button aria-expanded="false" class="accordion-header">
+                        <button aria-expanded="true" class="accordion-header">
                             <span>Price</span>
                             <span class="arrow arrow-down"></span>
                         </button>
-                        <div aria-expanded="false" class="accordion-content">
-                            <div class="slider-option">
-                                <div class="slider-numeric">
-                                    <div>
-                                        <x-carbon-currency-euro title="EUR" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-from" id="price-from-filter" value="{{$minPrice}}">
-                                    </div>
-                                    <span>-</span>
-                                    <div>
-                                        <x-carbon-currency-euro title="EUR" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-to" id="price-to-filter" value="{{$maxPrice}}">
-                                    </div>
-                                </div>
-                                <div class="slider">
-                                    <div class="rail"></div>
-                                    <div class="range"></div>
-                                    <div class="from"></div>
-                                    <div class="to"></div>
-                                </div>
-                            </div>
+                        <div aria-expanded="true" class="accordion-content">
+                            <x-slider name="price" min="{{$minMaxPrice->min_price}}" max="{{$minMaxPrice->max_price}}">
+                                <x-carbon-currency-euro title="EUR" class="icon" />
+                            </x-slider>
                         </div>
                     </div>
                     <div class="item">
-                        <button aria-expanded="false" class="accordion-header">
+                        <button aria-expanded="true" class="accordion-header">
                             <span>Dimensions</span>
                             <span class="arrow arrow-down"></span>
                         </button>
-                        <div aria-expanded="false" class="accordion-content">
-                            <div class="slider-option">
-                                <div class="slider-numeric">
-                                    <div>
-                                        <x-carbon-arrow-right title="Length" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-from" id="price-from-filter" value="{{$minPrice}}">
-                                    </div>
-                                    <span>-</span>
-                                    <div>
-                                        <x-carbon-arrow-right title="Length" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-to" id="price-to-filter" value="{{$maxPrice}}">
-                                    </div>
-                                </div>
-                                <div class="slider">
-                                    <div class="rail"></div>
-                                    <div class="range"></div>
-                                    <div class="from"></div>
-                                    <div class="to"></div>
-                                </div>
-                            </div>
-                            <div class="slider-option">
-                                <div class="slider-numeric">
-                                    <div>
-                                        <x-carbon-arrow-up-right title="Height" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-from" id="price-from-filter" value="{{$minPrice}}">
-                                    </div>
-                                    <span>-</span>
-                                    <div>
-                                        <x-carbon-arrow-up-right title="Height" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-to" id="price-to-filter" value="{{$maxPrice}}">
-                                    </div>
-                                </div>
-                                <div class="slider">
-                                    <div class="rail"></div>
-                                    <div class="range"></div>
-                                    <div class="from"></div>
-                                    <div class="to"></div>
-                                </div>
-                            </div>
-                            <div class="slider-option">
-                                <div class="slider-numeric">
-                                    <div>
-                                        <x-carbon-arrow-up title="Width" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-from" id="price-from-filter" value="{{$minPrice}}">
-                                    </div>
-                                    <span>-</span>
-                                    <div>
-                                        <x-carbon-arrow-up title="Width" class="icon" />
-                                        <input type="number" min="{{$minPrice}}" max="{{$maxPrice}}" name="price-to" id="price-to-filter" value="{{$maxPrice}}">
-                                    </div>
-                                </div>
-                                <div class="slider">
-                                    <div class="rail"></div>
-                                    <div class="range"></div>
-                                    <div class="from"></div>
-                                    <div class="to"></div>
-                                </div>
-                            </div>
+                        <div aria-expanded="true" class="accordion-content">
+                            <x-slider name="length" min="{{$minMaxDimensions->min_length}}" max="{{$minMaxDimensions->max_length}}">
+                                <x-carbon-arrow-right title="Length" class="icon" />
+                            </x-slider>
+                            <x-slider name="height" min="{{$minMaxDimensions->min_height}}" max="{{$minMaxDimensions->max_height}}">
+                                <x-carbon-arrow-up-right title="Height" class="icon" />
+                            </x-slider>
+                            <x-slider name="width" min="{{$minMaxDimensions->min_width}}" max="{{$minMaxDimensions->max_width}}">
+                                <x-carbon-arrow-up title="Width" class="icon" />
+                            </x-slider>
                         </div>
                     </div>
                 </div>

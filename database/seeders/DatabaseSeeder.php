@@ -162,6 +162,6 @@ class DatabaseSeeder extends Seeder
             Category::create($category);
         }
 
-        Product::factory(1000)->create();
+        Product::factory(5000)->create();
     }
 }
