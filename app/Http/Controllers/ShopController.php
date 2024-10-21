@@ -36,6 +36,7 @@ class ShopController extends Controller
         $minMaxDimensions = Product::getMaxMinDimensions($category);
         $productsCount = $products->get()->count();
         $minMaxPrice = Product::getMaxMinPrice($category);
+        $allColors = Product::getColors($category);
 
         $paginatedProducts = $products->paginate(24);
 
@@ -45,7 +46,7 @@ class ShopController extends Controller
             $subCategories = null;
         }
 
-        return view('shop.index', compact('paginatedProducts', 'productsCount', 'minMaxPrice', 'minMaxDimensions', 'category', 'subCategories', 'mainCategories'));
+        return view('shop.index', compact('paginatedProducts', 'productsCount', 'minMaxPrice', 'minMaxDimensions', 'allColors', 'category', 'subCategories', 'mainCategories'));
     }
 
     public function show($category, $product) {

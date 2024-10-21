@@ -109,12 +109,16 @@
                 }
             }
             .accordion-content {
-                display: none;
-                padding-bottom: 1rem;
-                gap: .5rem;
+                display: flex;
+                flex-direction: column;
+                visibility: hidden;
+                height: 0;
+                overflow: clip;
                 &[aria-expanded="true"] {
-                    display: flex;
-                    flex-direction: column;
+                    padding-bottom: 1rem;
+                    gap: .5rem;
+                    visibility: visible;
+                    height: auto;
                 }
                 .option {
                     display: flex;

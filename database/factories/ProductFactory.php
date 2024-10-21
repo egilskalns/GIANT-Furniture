@@ -24,6 +24,33 @@ class ProductFactory extends Factory
             'https://static.vecteezy.com/system/resources/previews/029/837/971/non_2x/modern-single-sofa-on-isolated-white-background-ai-generative-photo.jpg'
         ];
 
+        $colors = [
+            '#f27695',
+            '#71b67e',
+            '#33ba9c',
+            '#6915de',
+            '#19aed0',
+            '#529562',
+            '#38f197',
+            '#4046fd',
+            '#9df540',
+            '#c65a14',
+            '#ab1ca0',
+            '#4906d5',
+            '#6f6841',
+            '#779feb',
+            '#8aaa99',
+            '#10e9a7',
+            '#ba62fa',
+            '#1f136f',
+            '#228339',
+            '#856b98',
+            '#efb004',
+            '#699c6b',
+            '#93972f',
+            '#04f5a6'
+        ];
+
         return [
             'category_id' => fake()->numberBetween(8, 35),
             'name' => fake()->text(24),
@@ -35,7 +62,7 @@ class ProductFactory extends Factory
                 'height' => $this->faker->numberBetween(1, 3000),
                 'weight' => $this->faker->numberBetween(1, 1000)
             ]),
-            'color' => fake()->hexColor(),
+            'color' => $colors[fake()->numberBetween(0, count($colors) - 1)],
             'main_img' => $images[fake()->numberBetween(0,4)],
             'alt_img' => fake()->imageUrl().';'.fake()->imageUrl(),
             'price' => fake()->numberBetween(100, 1000),

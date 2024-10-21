@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 use stdClass;
@@ -36,14 +37,19 @@ class Product extends Model
         'name',
         'sku',
         'description',
-        'specification',
-        'color'
+        'specification'
     ];
     protected array $betweenFilterFields = [
         'price',
         'stock',
         'discount',
         'rating'
+    ];
+    protected array $specificBetweenFilterFields = [
+        'height',
+        'width',
+        'length',
+        'weight'
     ];
 
     /**
@@ -111,7 +117,7 @@ class Product extends Model
         }
 
         return DB::table('products')
-            ->where('category_id', $category)
+            ->where('category_id', $category->id)
             ->select(DB::raw('
             MAX(CAST(json_extract(specification, "$.height") AS INTEGER)) as max_height,
             MIN(CAST(json_extract(specification, "$.height") AS INTEGER)) as min_height,
@@ -145,5 +151,21 @@ class Product extends Model
             MIN(price) as min_price,
             MAX(price) as max_price
         '))->first();
+    }
+
+    public static function getColors($category): Collection
+    {
+        if ($category->children->count() > 0) {
+            $categoryIds = $category->children->pluck('id')->toArray();
+            return DB::table('products')
+                ->whereIn('category_id', $categoryIds)
+                ->distinct()
+                ->pluck('color');
+        } else {
+            return DB::table('products')
+                ->where('category_id', $category->id)
+                ->distinct()
+                ->pluck('color');
+        }
     }
 }

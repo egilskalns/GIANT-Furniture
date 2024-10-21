@@ -3,8 +3,20 @@ const baseURL = window.location.origin + window.location.pathname;
 const params = new URLSearchParams(window.location.search);
 
 function updateParams(...attributes) {
+    let keysToDelete = [];
+
     attributes.forEach(([key, value]) => {
         params.set(key, value);
+    });
+
+    params.forEach((param, key) => {
+        if (param.length === 0) {
+            keysToDelete.push(key);
+        }
+    });
+
+    keysToDelete.forEach(key => {
+        params.delete(key);
     });
 
     window.location.href = `${baseURL}?${params.toString()}`;
@@ -57,57 +69,135 @@ document.addEventListener('scroll', () => {
 
 // Sort drop-down menu
 const dropBtn = document.querySelector('.sort-drop');
+const dropBtnText = document.querySelector('.sort-drop-text');
 const dropList = document.querySelector('.drop-list');
+const sortOptions = dropList.querySelectorAll('button');
 
 function sortControls() {
     if (dropBtn.getAttribute('aria-expanded') === 'true') {
         dropBtn.setAttribute('aria-expanded', 'false');
         dropList.setAttribute('aria-expanded', 'false');
-        //TODO
     } else {
         dropBtn.setAttribute('aria-expanded', 'true');
         dropList.setAttribute('aria-expanded', 'true');
-        //TODO
+    }
+}
+
+function chooseSortOption(e) {
+    const option = e.target;
+
+    if (option.getAttribute('aria-selected') === 'true') {
+        dropBtn.setAttribute('aria-expanded', 'false');
+        dropList.setAttribute('aria-expanded', 'false');
+    } else {
+        let q = [
+            'sortBy', [option.getAttribute('name'), option.getAttribute('data-order')],
+        ];
+        updateParams(q);
     }
 }
 
 dropBtn.addEventListener('click', sortControls);
+sortOptions.forEach((option) => {
+    option.addEventListener('click', chooseSortOption);
+
+    if (params.has('sortBy')) {
+        if (params.get('sortBy').split(',')[0] === option.getAttribute('name')) {
+            dropBtnText.innerHTML = option.innerHTML;
+        }
+    }
+});
+
+// CheckBox controls
+const checkboxes = filters.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach(checkbox => {
+   checkbox.addEventListener('change', (e) => {
+       if (e.target.checked) {
+           debouncedUpdateParams([e.target.name, true]);
+       } else {
+           debouncedUpdateParams([e.target.name, '']);
+       }
+   });
+
+   if (params.has(checkbox.name)) {
+       if (params.get(checkbox.name) === 'true') {
+           checkbox.checked = true;
+       }
+   }
+});
 
 // Accordion
 const accordionHeader = document.querySelectorAll('.accordion-header');
+let openOptions = JSON.parse(sessionStorage.getItem('open-filters')) || [];
 
-function accordionControls(e) {
-    const btn = e.target;
-    const content = e.target.parentNode.lastElementChild
+function accordionControls(eventOrBtn) {
+    let btn, content;
+
+    if (eventOrBtn.target) {
+        btn = eventOrBtn.target;
+        content = btn.parentNode.lastElementChild;
+    } else {
+        btn = eventOrBtn;
+        content = btn.parentElement.lastElementChild;
+    }
 
     if (btn.getAttribute('aria-expanded') === 'true') {
         btn.setAttribute('aria-expanded', 'false');
         content.setAttribute('aria-expanded', 'false');
+
+        openOptions = openOptions.filter(itemId => itemId !== btn.getAttribute('itemid'));
     } else {
         btn.setAttribute('aria-expanded', 'true');
         content.setAttribute('aria-expanded', 'true');
+
+        openOptions.push(btn.getAttribute('itemid'));
     }
+
+    sessionStorage.setItem('open-filters', JSON.stringify(openOptions));
 }
+
+const open = JSON.parse(sessionStorage.getItem('open-filters')) || [];
 
 accordionHeader.forEach((btn) => {
     btn.addEventListener('click', accordionControls);
+
+    if (open.includes(btn.getAttribute('itemid'))) {
+        accordionControls(btn);
+    }
 });
 
 // Color pick filter
 const colors = document.querySelectorAll('.color-picker');
+let pickedColors = [];
+
+if (params.has('color')) {
+    pickedColors = params.get('color').split(',');
+    pickedColors = pickedColors.filter(color => color !== "");
+}
+
+function pickColor(e) {
+    const picker = e.target;
+
+    if (picker.getAttribute('aria-checked') === 'true') {
+        picker.setAttribute('aria-checked', 'false');
+
+        pickedColors = pickedColors.filter(color => color !== picker.getAttribute('aria-details'));
+    } else {
+        picker.setAttribute('aria-checked', 'true');
+
+        pickedColors.push(picker.getAttribute('aria-details'));
+    }
+
+    let q = ['color', pickedColors];
+    debouncedUpdateParams(q);
+}
 
 colors.forEach(color => {
-    color.addEventListener('click', (e) => {
-        const picker = e.target;
-
-        if (picker.getAttribute('aria-checked') === 'true') {
-            picker.setAttribute('aria-checked', 'false');
-            //TODO
-        } else {
-            picker.setAttribute('aria-checked', 'true');
-            //TODO
-        }
-    });
+    color.addEventListener('click', pickColor);
+    if (pickedColors.includes(color.getAttribute('aria-details'))) {
+        color.setAttribute('aria-checked', 'true');
+    }
 });
 
 // Slider
@@ -145,8 +235,8 @@ function moveNob(e, handle, rail, range, otherHandle, isFrom, fromInput, toInput
         fromInput.value = minValue;
         toInput.value = maxValue;
 
-        let attributes = [fromInput.getAttribute('data-name'), [minValue,maxValue]];
-        debouncedUpdateParams(attributes);
+        let q = [fromInput.getAttribute('data-name'), [minValue,maxValue]];
+        debouncedUpdateParams(q);
     }
 
     function onMouseUp() {
