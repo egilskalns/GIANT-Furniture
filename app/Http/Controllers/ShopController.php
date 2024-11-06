@@ -50,7 +50,21 @@ class ShopController extends Controller
     }
 
     public function show($category, $product) {
-        var_dump('ir');
+        $allCategories = Category::all();
+
+        $category = $allCategories->where('slug', $category)->first();
+        $mainCategories = $allCategories->whereNull('parent_id')->all();
+
+        $product = $this->model->where('slug', $product)->first();
+
+        if ($category->children->count() > 0) {
+            $subcategory = $product->category;
+        } else {
+            $subcategory = $category;
+            $category = $category->parent;
+        }
+
+        return view('shop.show', compact('category', 'mainCategories', 'product', 'subcategory'));
     }
 
     public function create()

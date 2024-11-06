@@ -15,7 +15,13 @@
         top: 0;
         left: 0;
         bottom: 0;
-        width: 30rem;
+        width: 100vw;
+        @media (min-width: $breakpoint-md) {
+            width: 50vw;
+        }
+        @media (min-width: $breakpoint-lg) {
+            width: 30vw;
+        }
         background: #ffffff;
         transition: transform ease-in-out 0.2s;
         overflow-y: auto;
@@ -109,7 +115,13 @@
     .side-container {
         left: unset;
         right: 0;
-        width: 50vw;
+        width: 100vw;
+        @media (min-width: $breakpoint-md) {
+            width: 80vw;
+        }
+        @media (min-width: $breakpoint-lg) {
+            width: 50vw;
+        }
         padding: 0;
         .header {
             display: flex;

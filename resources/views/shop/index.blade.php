@@ -135,8 +135,25 @@
                                     <span><x-carbon-arrow-up class="arrow" /><span>{{json_decode($product->specification)->height}}mm</span></span>
                                 </div>
                                 <p class="price">
-                                    <x-carbon-currency-euro title="EUR" class="eur-icon" />
-                                    {{$product->price}}
+                                    @php
+                                        if ($product->discount > 0) {
+                                            $price = $product->price * (1 - $product->discount);
+                                        } else {
+                                            $price = $product->price;
+                                        }
+                                        $discount = $product->discount;
+                                    @endphp
+
+                                    <span>
+                                        <x-carbon-currency-euro title="EUR" class="eur-icon" />
+                                        <span class="disc-price">{{$price}}</span>
+                                    </span>
+
+                                    @if($discount > 0)
+                                        <span class="orig-price">
+                                            <span>€{{$product->price}}</span>
+                                        </span>
+                                    @endif
                                 </p>
                             </div>
                         </a>

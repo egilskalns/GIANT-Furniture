@@ -83,7 +83,7 @@ class Product extends Model
      * @return BelongsTo
      */
     public function category(): BelongsTo {
-        return $this->belongsTo(Category::class, 'id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     /**
@@ -131,6 +131,7 @@ class Product extends Model
     /**
      * Get the maximum and minimum price of all products
      *
+     * @param $category
      * @return stdClass
      */
     public static function getMaxMinPrice($category): stdClass
@@ -140,7 +141,11 @@ class Product extends Model
             return DB::table('products')
                 ->whereIn('category_id', $categoryIds)
                 ->select(DB::raw('
-            MIN(price) as min_price,
+            MIN(CASE 
+                WHEN discount > 0 
+                THEN price * (1-discount) 
+                ELSE price 
+            END) as min_price,
             MAX(price) as max_price
         '))->first();
         }
@@ -148,7 +153,11 @@ class Product extends Model
         return DB::table('products')
             ->where('category_id', $category->id)
             ->select(DB::raw('
-            MIN(price) as min_price,
+            MIN(CASE 
+                WHEN discount > 0 
+                THEN price * (1-discount) 
+                ELSE price 
+            END) as min_price,
             MAX(price) as max_price
         '))->first();
     }
@@ -166,6 +175,17 @@ class Product extends Model
                 ->where('category_id', $category->id)
                 ->distinct()
                 ->pluck('color');
+        }
+    }
+
+    public function isInCart(): bool {
+        $cart = \Cart::session(1);
+        if ($cart) {
+            if ($cart->get($this->id)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

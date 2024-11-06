@@ -233,11 +233,24 @@
             }
             .price {
                 display: flex;
-                letter-spacing: -.025rem;
-                font-size: 1rem;
-                line-height: 1.25rem;
-                .eur-icon {
-                    width: .9rem;
+                gap: .5rem;
+                span {
+                    display: flex;
+                    .eur-icon {
+                        width: .9rem;
+                    }
+                    span {
+                        letter-spacing: -.025rem;
+                        font-size: 1rem;
+                        line-height: 1.25rem;
+                    }
+                }
+                .orig-price {
+                    text-decoration: line-through;
+                    color: #707072;
+                    span {
+                        color: #707072;
+                    }
                 }
             }
         }

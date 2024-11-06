@@ -111,11 +111,7 @@
             gap: 1rem;
             cursor: pointer;
             padding-left: 6rem;
-            .search-icon {
-                color: black;
-                width: 1.25rem;
-                height: auto;
-            }
+
             span {
                 font-size: .875rem;
             }
@@ -148,6 +144,9 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            a {
+                display: flex;
+            }
             svg {
                 color: black;
                 width: 1.25rem;
@@ -157,3 +156,5 @@
         }
     }
 }
+
+

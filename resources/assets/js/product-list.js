@@ -38,7 +38,7 @@ const debouncedUpdateParams = debounce((attributes) => {
 const hideShowBtn = document.querySelector('.h-filters');
 const filters = document.querySelector('.filters-side');
 const productList = document.querySelector('.product-list');
-const btnTextElement = hideShowBtn.querySelector('span');
+let btnTextElement = null;
 
 function filtersVisibility() {
     if (filters.getAttribute('aria-expanded') === 'true') {
@@ -52,26 +52,33 @@ function filtersVisibility() {
     }
 }
 
-hideShowBtn.addEventListener('click', filtersVisibility);
+if (hideShowBtn) {
+    btnTextElement = hideShowBtn.querySelector('span');
+    hideShowBtn.addEventListener('click', filtersVisibility);
+}
 
 // Filters-footer behaviour
 const footer = document.querySelector('.main-footer');
-document.addEventListener('scroll', () => {
-    let windowY = window.scrollY + window.innerHeight;
-    let footerY = document.documentElement.scrollHeight - footer.getBoundingClientRect().height;
 
-    if (windowY - footerY >= 0) {
-        filters.style.bottom = windowY - footerY + 'px';
-    } else {
-        filters.style.bottom = '0';
-    }
-});
+if (filters) {
+    document.addEventListener('scroll', () => {
+        let windowY = window.scrollY + window.innerHeight;
+        let footerY = document.documentElement.scrollHeight - footer.getBoundingClientRect().height;
+
+        if (windowY - footerY >= 0) {
+            filters.style.bottom = windowY - footerY + 'px';
+        } else {
+            filters.style.bottom = '0';
+        }
+    });
+}
 
 // Sort drop-down menu
 const dropBtn = document.querySelector('.sort-drop');
 const dropBtnText = document.querySelector('.sort-drop-text');
 const dropList = document.querySelector('.drop-list');
-const sortOptions = dropList.querySelectorAll('button');
+let sortOptions = null;
+
 
 function sortControls() {
     if (dropBtn.getAttribute('aria-expanded') === 'true') {
@@ -97,35 +104,43 @@ function chooseSortOption(e) {
     }
 }
 
-dropBtn.addEventListener('click', sortControls);
-sortOptions.forEach((option) => {
-    option.addEventListener('click', chooseSortOption);
+if (dropBtn) {
+    sortOptions = dropList.querySelectorAll('button');
 
-    if (params.has('sortBy')) {
-        if (params.get('sortBy').split(',')[0] === option.getAttribute('name')) {
-            dropBtnText.innerHTML = option.innerHTML;
+    dropBtn.addEventListener('click', sortControls);
+    sortOptions.forEach((option) => {
+        option.addEventListener('click', chooseSortOption);
+
+        if (params.has('sortBy')) {
+            if (params.get('sortBy').split(',')[0] === option.getAttribute('name')) {
+                dropBtnText.innerHTML = option.innerHTML;
+            }
         }
-    }
-});
+    });
+}
 
 // CheckBox controls
-const checkboxes = filters.querySelectorAll('input[type="checkbox"]');
+let checkboxes = null;
 
-checkboxes.forEach(checkbox => {
-   checkbox.addEventListener('change', (e) => {
-       if (e.target.checked) {
-           debouncedUpdateParams([e.target.name, true]);
-       } else {
-           debouncedUpdateParams([e.target.name, '']);
-       }
-   });
+if (filters) {
+    checkboxes = filters.querySelectorAll('input[type="checkbox"]');
 
-   if (params.has(checkbox.name)) {
-       if (params.get(checkbox.name) === 'true') {
-           checkbox.checked = true;
-       }
-   }
-});
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                debouncedUpdateParams([e.target.name, true]);
+            } else {
+                debouncedUpdateParams([e.target.name, '']);
+            }
+        });
+
+        if (params.has(checkbox.name)) {
+            if (params.get(checkbox.name) === 'true') {
+                checkbox.checked = true;
+            }
+        }
+    });
+}
 
 // Accordion
 const accordionHeader = document.querySelectorAll('.accordion-header');

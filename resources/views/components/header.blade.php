@@ -20,7 +20,7 @@
             <p>Call Us</p>
         </div>
         <div class="items">
-            <x-carbon-shopping-cart title="Cart" class="cart-icon" />
+            <a href="{{route('cart.index')}}"><x-carbon-shopping-cart title="Cart" class="cart-icon" /></a>
             <x-carbon-favorite title="Wishlist" class="favorite-icon" />
             <x-carbon-user title="Account" class="user-icon mobile-menu-toggle-right" />
         </div>

@@ -64,7 +64,12 @@ class ProductFactory extends Factory
             ]),
             'color' => $colors[fake()->numberBetween(0, count($colors) - 1)],
             'main_img' => $images[fake()->numberBetween(0,4)],
-            'alt_img' => fake()->imageUrl().';'.fake()->imageUrl(),
+            'alt_img' => json_encode([
+                $images[fake()->numberBetween(0,4)],
+                $images[fake()->numberBetween(0,4)],
+                $images[fake()->numberBetween(0,4)],
+                $images[fake()->numberBetween(0,4)]
+            ]),
             'price' => fake()->numberBetween(100, 1000),
             'stock' => fake()->numberBetween(0, 1000),
             'discount' => fake()->boolean(20) // 20% chance for a discount

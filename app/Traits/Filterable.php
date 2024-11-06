@@ -12,24 +12,25 @@ trait Filterable
         $tableName = $this->getTable();
 
         foreach ($filters as $field => $value) {
-            if(in_array($field, $this->betweenFilterFields)) {
+            if (in_array($field, $this->betweenFilterFields)) {
                 $value = explode(',', $value);
 
-                $builder->where($field, '>=', (int) $value[0]);
-                $builder->where($field, '<=', (int) $value[1]);
+                if ($field == 'price') {
+                    $builder->whereRaw('CAST(CASE WHEN discount > 0 THEN price * (1-discount) ELSE price END AS INTEGER) >= ?', [(int) $value[0]]);
+                    $builder->whereRaw('CAST(CASE WHEN discount > 0 THEN price * (1-discount) ELSE price END AS INTEGER) <= ?', [(int) $value[1]]);
+                } else {
+                    $builder->where($field, '>=', (int) $value[0]);
+                    $builder->where($field, '<=', (int) $value[1]);
+                }
             }
             if(in_array($field, $this->likeFilterFields)) {
                 $builder->where($tableName.'.'.$field, 'LIKE', "%$value%");
             }
             if(in_array($field, $this->specificBetweenFilterFields)) {
-                $valueRange = explode(',', $value);
+                $value = explode(',', $value);
 
-                if (count($valueRange) == 2) {
-                    $builder->whereRaw('CAST(json_extract(specification, "$.' . $field . '") AS INTEGER) >= ?', [(int)$valueRange[0]]);
-                    $builder->whereRaw('CAST(json_extract(specification, "$.' . $field . '") AS INTEGER) <= ?', [(int)$valueRange[1]]);
-                } else {
-                    $builder->whereRaw('CAST(json_extract(specification, "$.' . $field . '") AS INTEGER) = ?', [(int)$value]);
-                }
+                $builder->whereRaw('CAST(json_extract(specification, "$.' . $field . '") AS INTEGER) >= ?', [(int)$value[0]]);
+                $builder->whereRaw('CAST(json_extract(specification, "$.' . $field . '") AS INTEGER) <= ?', [(int)$value[1]]);
             }
             if($field == 'color') {
                 $colors = explode(',', $value);
@@ -41,18 +42,21 @@ trait Filterable
             if($field == 'in-warehouse') {
                 if ($value == 'stock') $builder->where('discount', '>' ,0);
             }
-            if($field == 'sortBy') {
+            if ($field == 'sortBy') {
                 $value = explode(',', $value);
                 $value = [$value[0] => $value[1]];
 
                 foreach ($value as $key => $order) {
-                    if ($key != "featured") {
+                    if ($key == "price") {
+                        $builder->orderByRaw('CASE WHEN discount > 0 THEN price * (1-discount) ELSE price END ' . $order);
+                    } elseif ($key != "featured") {
                         $builder->orderBy($key, $order);
                     } else {
                         $builder->orderBy('id', $order);
                     }
                 }
             }
+
         }
 
         return $builder;
