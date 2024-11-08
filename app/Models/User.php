@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -17,8 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'title',
+        'country_region',
+        'address_ids',
         'email',
+        'role',
+        'title',
         'password',
     ];
 
@@ -43,5 +50,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function country_region()
+    {
+        return DB::table('country_regions')->where('id', $this->country_region)->first();
+    }
+
+    public function addresses()
+    {
+        $addressIds = json_decode($this->address_ids, true);
+        return Address::whereIn('id', $addressIds)->get();
     }
 }
