@@ -21,8 +21,13 @@
         </div>
         <div class="items">
             <a href="{{route('cart.index')}}"><x-carbon-shopping-cart title="Cart" class="cart-icon" /></a>
-            <x-carbon-favorite title="Wishlist" class="favorite-icon" />
-            <x-carbon-user title="Account" class="user-icon mobile-menu-toggle-right" />
+            <a href="{{route('wishlist.index')}}"><x-carbon-favorite title="Wishlist" class="favorite-icon" /></a>
+            @guest
+                <x-carbon-user title="Account" class="user-icon mobile-menu-toggle-right" />
+            @endguest
+            @auth
+                <a href="{{route('profile.index')}}"><x-carbon-user title="Account" class="user-icon" /></a>
+            @endauth
         </div>
     </div>
     <div id="mobile-menu-left" aria-expanded="false" class="mobile-menu-left">

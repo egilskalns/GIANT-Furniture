@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\Category;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -163,5 +164,76 @@ class DatabaseSeeder extends Seeder
         }
 
         Product::factory(5000)->create();
+
+        User::create([
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
+            'title' => 'Mr',
+            'country_region' => 1,
+            'email' => 'admin@admin.com',
+            'role' => 'admin',
+            'password' => 'admin'
+        ]);
+
+        User::factory(1000)->create();
+
+        $countries = [
+            ['name' => 'Latvia', 'iso_code' => 'LV'],
+            ['name' => 'United States', 'iso_code' => 'US'],
+            ['name' => 'Canada', 'iso_code' => 'CA'],
+            ['name' => 'United Kingdom', 'iso_code' => 'GB'],
+            ['name' => 'Australia', 'iso_code' => 'AU'],
+            ['name' => 'Germany', 'iso_code' => 'DE'],
+            ['name' => 'France', 'iso_code' => 'FR'],
+            ['name' => 'Japan', 'iso_code' => 'JP'],
+            ['name' => 'China', 'iso_code' => 'CN'],
+            ['name' => 'Brazil', 'iso_code' => 'BR'],
+            ['name' => 'India', 'iso_code' => 'IN'],
+            ['name' => 'Italy', 'iso_code' => 'IT'],
+            ['name' => 'Spain', 'iso_code' => 'ES'],
+            ['name' => 'Netherlands', 'iso_code' => 'NL'],
+            ['name' => 'South Korea', 'iso_code' => 'KR'],
+            ['name' => 'Russia', 'iso_code' => 'RU'],
+            ['name' => 'Mexico', 'iso_code' => 'MX'],
+            ['name' => 'Switzerland', 'iso_code' => 'CH'],
+            ['name' => 'Turkey', 'iso_code' => 'TR'],
+            ['name' => 'Sweden', 'iso_code' => 'SE'],
+            ['name' => 'Belgium', 'iso_code' => 'BE'],
+            ['name' => 'Austria', 'iso_code' => 'AT'],
+            ['name' => 'Poland', 'iso_code' => 'PL'],
+            ['name' => 'Norway', 'iso_code' => 'NO'],
+            ['name' => 'Denmark', 'iso_code' => 'DK'],
+            ['name' => 'Finland', 'iso_code' => 'FI'],
+            ['name' => 'Ireland', 'iso_code' => 'IE'],
+            ['name' => 'South Africa', 'iso_code' => 'ZA'],
+            ['name' => 'New Zealand', 'iso_code' => 'NZ'],
+            ['name' => 'Singapore', 'iso_code' => 'SG'],
+            ['name' => 'Malaysia', 'iso_code' => 'MY'],
+            ['name' => 'Saudi Arabia', 'iso_code' => 'SA'],
+            ['name' => 'United Arab Emirates', 'iso_code' => 'AE'],
+            ['name' => 'Israel', 'iso_code' => 'IL'],
+            ['name' => 'Portugal', 'iso_code' => 'PT'],
+            ['name' => 'Czech Republic', 'iso_code' => 'CZ'],
+            ['name' => 'Greece', 'iso_code' => 'GR'],
+            ['name' => 'Hungary', 'iso_code' => 'HU'],
+            ['name' => 'Argentina', 'iso_code' => 'AR'],
+            ['name' => 'Thailand', 'iso_code' => 'TH'],
+            ['name' => 'Vietnam', 'iso_code' => 'VN'],
+            ['name' => 'Philippines', 'iso_code' => 'PH'],
+            ['name' => 'Egypt', 'iso_code' => 'EG'],
+            ['name' => 'Chile', 'iso_code' => 'CL'],
+            ['name' => 'Colombia', 'iso_code' => 'CO'],
+            ['name' => 'Indonesia', 'iso_code' => 'ID'],
+            ['name' => 'Ukraine', 'iso_code' => 'UA'],
+            ['name' => 'Romania', 'iso_code' => 'RO'],
+            ['name' => 'Hong Kong', 'iso_code' => 'HK'],
+            ['name' => 'Ireland', 'iso_code' => 'IE'],
+            ['name' => 'Luxembourg', 'iso_code' => 'LU'],
+            ['name' => 'Qatar', 'iso_code' => 'QA'],
+        ];
+
+        DB::table('country_regions')->insert($countries);
+
+        Address::factory(1000)->create();
     }
 }

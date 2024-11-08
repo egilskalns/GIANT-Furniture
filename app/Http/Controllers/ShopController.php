@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
-    protected $model;
+    public $productService;
 
-    public function __construct(Product $model)
+    public function __construct(
+        \App\Services\Product\Service $productService,
+    )
     {
-        $this->model = $model;
+        $this->productService = $productService;
     }
 
     public function index(Request $request, $category) {
@@ -22,23 +23,14 @@ class ShopController extends Controller
         $category = $allCategories->where('slug', $category)->first();
         $mainCategories = $allCategories->whereNull('parent_id')->all();
 
-        if ($category->children->count() > 0) {
-            $categoryIds = $category->children->pluck('id')->toArray();
-            $products = $this->model
-                ->filter($request->all())
-                ->whereIn('category_id', $categoryIds);
-        } else {
-            $products = $this->model
-                ->filter($request->all())
-                ->where('category_id', $category->id);
-        }
+        $products = $this->productService->getProducts($category, $request);
 
         $minMaxDimensions = Product::getMaxMinDimensions($category);
         $productsCount = $products->get()->count();
         $minMaxPrice = Product::getMaxMinPrice($category);
         $allColors = Product::getColors($category);
 
-        $paginatedProducts = $products->paginate(24);
+        $paginatedProducts = $products->paginate(24)->withQueryString();
 
         if ($category->parent_id == null) {
             $subCategories = $category->children;
@@ -49,13 +41,13 @@ class ShopController extends Controller
         return view('shop.index', compact('paginatedProducts', 'productsCount', 'minMaxPrice', 'minMaxDimensions', 'allColors', 'category', 'subCategories', 'mainCategories'));
     }
 
-    public function show($category, $product) {
+    public function show($category, $slug) {
         $allCategories = Category::all();
 
         $category = $allCategories->where('slug', $category)->first();
         $mainCategories = $allCategories->whereNull('parent_id')->all();
 
-        $product = $this->model->where('slug', $product)->first();
+        $product = $this->productService->getProduct($slug);
 
         if ($category->children->count() > 0) {
             $subcategory = $product->category;

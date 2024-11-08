@@ -1,0 +1,33 @@
+.pagination-controls {
+    margin-top: 5rem;
+    grid-column: 1 / -1;
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        :first-child {
+            padding-right: 1rem;
+        }
+        :last-child {
+            padding-left: 1rem;
+        }
+        a[rel] {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+        .active {
+            display: inline-block;
+            background-color: black;
+            padding: .25rem .5rem;
+            border-radius: 10px;
+            color: white;
+            cursor: default;
+        }
+        span[aria-disabled="true"] {
+            color: #e1e1e1;
+            cursor: default;
+            text-decoration: none;
+        }
+    }
+}

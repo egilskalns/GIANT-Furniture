@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\Wishlist\WishlistController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,8 +15,23 @@ Route::get('/categories/{category}', [ShopController::class, 'index'])->name('sh
 Route::get('/categories/{category}/{product}', [ShopController::class, 'show'])->name('shop.show');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart', [CartController::class, 'create'])->name('cart.add');
+Route::post('/cart', [CartController::class, 'store'])->name('cart.add');
 Route::put('/cart', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.remove');
 
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.add');
+Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.remove');
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+});
+
+Route::group(['namespace' => 'MyGiant', 'prefix' => 'mygiant', 'middleware' => 'auth'], function () {
+    Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+    });
+});
+
 Auth::routes();
+

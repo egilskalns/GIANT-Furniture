@@ -10,12 +10,12 @@
         <div class="flex padding-side-lg">
             <div class="cart-content">
                 <div class="cart-content__left">
-                    @if(count($items) == 0)
+                    @if(count($cartItems) == 0)
                         <div class="cart-empty">
                             <h4>There are no items in your cart.</h4>
                         </div>
                     @endif
-                    @foreach($items as $item)
+                    @foreach($cartItems as $item)
                         <div class="cart-item">
                             <div class="group">
                                 <div class="cart-item__left">

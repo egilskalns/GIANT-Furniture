@@ -145,23 +145,25 @@
                                     @endphp
 
                                     <span>
-                                        <x-carbon-currency-euro title="EUR" class="eur-icon" />
-                                        <span class="disc-price">{{$price}}</span>
-                                    </span>
+                                    <x-carbon-currency-euro title="EUR" class="eur-icon" />
+                                    <span class="disc-price">{{$price}}</span>
+                                </span>
 
                                     @if($discount > 0)
                                         <span class="orig-price">
-                                            <span>€{{$product->price}}</span>
-                                        </span>
+                                        <span>€{{$product->price}}</span>
+                                    </span>
                                     @endif
                                 </p>
                             </div>
                         </a>
                     @endforeach
+                    <div class="pagination-controls">
+                        {{$paginatedProducts->links('components.paginator')}}
+                    </div>
                 @else
                     <p>Nothing found</p>
                 @endif
-
             </div>
         </div>
     </section>

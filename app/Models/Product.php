@@ -188,4 +188,15 @@ class Product extends Model
             }
         }
     }
+
+    public function isInWishlist(): bool {
+        $wishlist = \Cart::session(2);
+        if ($wishlist) {
+            if ($wishlist->get($this->id)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

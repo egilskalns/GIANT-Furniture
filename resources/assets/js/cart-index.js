@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 let method;
 
                 if (action === 'increase') {
-                    newQuantity = currentQuantity + 1;
+                    newQuantity = 1;
                     formAction = updateRoute;
                     method = 'PUT';
                 } else if (action === 'decrease' && currentQuantity > 1) {
-                    newQuantity = currentQuantity - 1;
+                    newQuantity = -1;
                     formAction = updateRoute;
                     method = 'PUT';
                 } else if (action === 'remove') {
@@ -30,17 +30,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                // Create and submit form dynamically
                 const form = document.createElement('form');
                 form.action = formAction;
                 form.method = 'post';
 
-                // Add CSRF and method fields
                 form.innerHTML = `
                         <input type="hidden" name="_token" value="${csrfToken}">
                         <input type="hidden" name="_method" value="${method}">
                         <input type="hidden" name="id" value="${itemId}">
-                        ${newQuantity > 0 ? `<input type="hidden" name="quantity" value="${newQuantity}">` : ''}
+                        ${currentQuantity > 0 ? `<input type="hidden" name="quantity" value="${newQuantity}">` : ''}
                     `;
 
                 document.body.appendChild(form);

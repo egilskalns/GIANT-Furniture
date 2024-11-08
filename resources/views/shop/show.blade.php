@@ -33,10 +33,27 @@
                     <div class="product-content-header">
                         <div>
                             <h1>{{$product->name}}</h1>
-                            <button aria-checked="false" data-id="{{$product->id}}" class="add-to-wishlist">
+                            <button aria-checked="{{$product->isInWishlist() ? 'true' : 'false'}}" form="{{$product->isInWishlist() ? 'remove-from-wishlist' : 'add-to-wishlist'}}" class="add-to-wishlist">
                                 <x-carbon-favorite title="Add to Wishlist" class="favorite-icon -empty" />
-                                <x-carbon-favorite-filled title="Add to Wishlist" class="favorite-icon -filled" />
+                                <x-carbon-favorite-filled title="Remove from Wishlist" class="favorite-icon -filled" />
                             </button>
+                            <form hidden id="add-to-wishlist" action="{{route('wishlist.add')}}" method="post">
+                                @csrf
+                                <input name="id" value="{{$product->id}}" type="hidden">
+                                <input name="name" value="{{$product->name}}" type="hidden">
+                                <input name="price" value="{{$product->price}}" type="hidden">
+                                <input name="attributes[discount]" value="{{$product->discount}}" type="hidden">
+                                <input name="attributes[subcategory][name]" value="{{$subcategory->name}}" type="hidden">
+                                <input name="attributes[subcategory][slug]" value="{{$subcategory->slug}}" type="hidden">
+                                <input name="attributes[category][name]" value="{{$category->name}}" type="hidden">
+                                <input name="attributes[category][slug]" value="{{$category->slug}}" type="hidden">
+                                <input name="attributes[slug]" value="{{$product->slug}}" type="hidden">
+                                <input name="attributes[image]" value="{{$product->main_img}}" type="hidden">
+                            </form>
+                            <form hidden id="remove-from-wishlist" action="{{route('wishlist.remove', ['id' => $product->id])}}" method="post">
+                                @method('DELETE')
+                                @csrf
+                            </form>
                         </div>
                         <p>{{$product->category->name}}</p>
                         <p class="price">

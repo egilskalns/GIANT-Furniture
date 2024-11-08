@@ -1,0 +1,21 @@
+.advice-text {
+  a {
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+.remove-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  padding-right: .5rem;
+  border-radius: 10px;
+  &:hover {
+    border: 1px solid black;
+  }
+  .icon {
+    margin: .5rem;
+  }
+}
