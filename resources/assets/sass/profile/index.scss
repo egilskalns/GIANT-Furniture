@@ -60,6 +60,7 @@
     flex-direction: column;
     width: calc(50% - 1rem);
     gap: 2rem;
+    margin-bottom: var(--header-height);
     .content-box {
       h4 {
         font-size: 1.5rem;
@@ -78,6 +79,34 @@
         letter-spacing: -.025rem;
         line-height: 1rem;
         margin-top: 1rem;
+        .list {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          ul {
+            padding-bottom: 1.5rem;
+            li {
+              display: flex;
+              border-bottom: 1px solid #e1e1e1;
+              gap: .5rem;
+              span {
+                padding: 0.5rem 0;
+                border: none;
+                margin: 0;
+                letter-spacing: .01rem;
+              }
+            }
+          }
+          span {
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            place-content: center;
+            border-radius: 10px;
+            border: 1px solid #e1e1e1;
+          }
+        }
         .label {
           margin-bottom: .5rem;
         }
@@ -150,6 +179,32 @@
               margin-bottom: .5rem;
               height: 1rem;
               width: 1rem;
+            }
+          }
+          .flex-wrap {
+            gap: 0 .5rem;
+            div {
+              display: flex;
+              flex: 1 1 30%;
+              flex-direction: column;
+              gap: .5rem;
+              &:nth-child(4),
+              &:nth-child(5) {
+                flex: 1 1 45%;
+              }
+              span {
+                place-self: start;
+              }
+              input {
+                padding: 0 .5rem;
+                margin-bottom: .5rem;
+                font-size: .875rem;
+                height: 2rem;
+              }
+            }
+            button {
+              flex: 1;
+              margin-top: 1rem;
             }
           }
         }

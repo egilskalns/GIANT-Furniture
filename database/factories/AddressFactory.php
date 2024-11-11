@@ -19,10 +19,10 @@ class AddressFactory extends Factory
         return [
             'country' => $this->faker->numberBetween(0,50),
             'city' => $this->faker->city,
-            'street' => $this->faker->streetName,
-            'house_number' => $this->faker->buildingNumber,
+            'address' => $this->faker->address,
+            'apartment' => $this->faker->numberBetween(10,100),
             'postal_code' => $this->faker->postcode,
-            'additional_info' => $this->faker->optional()->sentence,
+            'phone' => $this->faker->phoneNumber,
         ];
     }
 }

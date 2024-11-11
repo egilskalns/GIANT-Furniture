@@ -7,3 +7,6 @@
 3.pirmajā konsolē npm run dev
 4.otrajā konsolē php artisan serve
 
+testa profili
+admin@admin.com admin -administrators
+nellie24@example.net password -lietotājs

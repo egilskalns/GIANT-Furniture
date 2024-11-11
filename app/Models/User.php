@@ -25,7 +25,6 @@ class User extends Authenticatable
         'address_ids',
         'email',
         'role',
-        'title',
         'password',
     ];
 
@@ -57,9 +56,15 @@ class User extends Authenticatable
         return DB::table('country_regions')->where('id', $this->country_region)->first();
     }
 
-    public function addresses()
+    public function getAddresses()
     {
         $addressIds = json_decode($this->address_ids, true);
+
+        // Check if $addressIds is a valid array; if not, return an empty collection
+        if (empty($addressIds) || !is_array($addressIds)) {
+            return collect();
+        }
+
         return Address::whereIn('id', $addressIds)->get();
     }
 }

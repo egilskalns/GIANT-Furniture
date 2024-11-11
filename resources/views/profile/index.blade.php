@@ -4,7 +4,6 @@
     <nav class="target-header -hero -fixed">
         <h4>my<span>GIANT</span></h4>
         <div class="tabs">
-            <a href="" class="tab">Overview</a>
             <a href="" aria-selected="true" class="tab">My Profile</a>
             <a href="" class="tab">My Orders</a>
         </div>
@@ -70,7 +69,57 @@
                 <div class="content-box">
                     <h4>My Address Book</h4>
                     <div class="content-box__content">
-
+                        <div class="list">
+                            @if(count($addresses) > 0)
+                                <ul>
+                                    <li>
+                                        <span>City</span>
+                                        <span>Address</span>
+                                        <span>Apartment</span>
+                                        <span>Postal code</span>
+                                        <span>Phone</span>
+                                    </li>
+                                    @foreach($addresses as $address)
+                                        <li>
+                                            <span>{{$address->city}}</span>
+                                            <span>{{$address->address}}</span>
+                                            <span>{{$address->apartment ?? ''}}</span>
+                                            <span>{{$address->postal_code}}</span>
+                                            <span>{{$address->phone}}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <span>You don't have any address saved</span>
+                            @endif
+                        </div>
+                        <form action="" method="post">
+                            @csrf
+                            @method("PUT")
+                            <div class="flex-wrap">
+                                <div>
+                                    <span>City*</span>
+                                    <input type="text" name="city" id="city">
+                                </div>
+                                <div>
+                                    <span>Address*</span>
+                                    <input type="text" name="street" id="street">
+                                </div>
+                                <div>
+                                    <span>Apartment, suite, etc.</span>
+                                    <input type="text" name="house_number" id="house_number">
+                                </div>
+                                <div>
+                                    <span>Postal code*</span>
+                                    <input type="text" name="postal_code" id="postal_code">
+                                </div>
+                                <div>
+                                    <span>Phone*</span>
+                                    <input type="text" name="phone" id="phone">
+                                </div>
+                                <button aria-checked="false" class="primary-btn" type="submit">Add address</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -95,6 +95,11 @@ body {
     display: flex;
 }
 
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .padding-side-sm {
     padding-inline: var(--padding-side);
 }
